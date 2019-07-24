@@ -1,0 +1,28 @@
+r1<-1
+r2<--0.1
+n<-10
+
+cp<-0.1
+co<-0.01
+
+etaTlist = c()
+Tlist = c()
+i<-0
+
+for(T in seq(0.01, 1, by = 0.01)) {
+  Tlist[i] <-T
+  cdf<-pweibull(T, scale=1, shape=1.5)
+  integrand <- function(t) {r1*t+r2*(T-t)}
+  partrT<-integrate(integrand, lower = 0, upper = T)
+  rT<-partrT$value+r1*T*(1-cdf)
+  etaT<-(n*rT-cp-n*co)/T
+  etaTlist[i]<-etaT
+  i<-i+1
+}
+ 
+
+y<-max(etaTlist)
+x<-Tlist[which.max(etaTlist)]
+
+plot(cbind(Tlist,etaTlist),type = "l",xlab= "Maintenance interval (T)",ylab="Average reward per unit time")
+points(cbind(x,y),col="red")

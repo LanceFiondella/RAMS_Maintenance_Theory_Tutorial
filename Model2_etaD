@@ -1,0 +1,24 @@
+
+c<-0.01
+
+
+etalist = c()
+Tlist = c()
+
+i<-0
+
+
+for(T in seq(0.01, 1, by = 0.01)) {
+  Tlist[i] <-T
+  HT[i]<--pweibull(T, 1, 1.5, log.p = TRUE, lower.tail = FALSE)
+  etaD<-(HT+c)/T
+  etalist[i]<-etaD
+  i<-i+1
+}
+
+
+y<-min(etalist)
+x<-Tlist[which.min(etalist)]
+
+plot(cbind(Tlist,etalist),type = "l",xlab= "Maintenance interval (T)",ylab="Average cost per unit time")
+points(cbind(x,y),col="red")

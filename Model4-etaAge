@@ -1,0 +1,30 @@
+
+lam<-1
+beta<-1.5
+
+cEr<-30000
+cPm<-1000
+
+
+etalist = c()
+Tlist = c()
+
+i<-0
+
+int <- function(t) 1-(1-exp(-(t/lam)^beta))
+
+for(T in seq(0, 1, by = 0.01)) {
+  Tlist[i] <-T
+  Ez<-integrate(int,0,T)$value
+  FT=1-exp(-(T/lam)^beta)
+  etaAge<-(FT*cEr+(1-FT)*cPm)/Ez
+  etalist[i]<-etaAge
+  i<-i+1
+}
+
+
+y<-min(etalist)
+x<-Tlist[which.min(etalist)]
+
+plot(cbind(Tlist,etalist),type = "l",xlab= "Maintenace interval (T)",ylab="Mean cost per unit time")
+points(cbind(x,y),col="red")

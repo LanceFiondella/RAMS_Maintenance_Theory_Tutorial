@@ -1,0 +1,28 @@
+
+
+cmin<-100
+cpr<-500
+cov<-10000
+beta<-1.5
+T<-1
+
+etalist = c()
+Klist = c()
+
+i<-0
+
+for(K in seq(0, 6, by = 0.01)) {
+  Klist[i] <-K
+  part=(exp(beta*K)-1)/(exp(beta)-1)
+  HT[i]<--pweibull(T, 1, 1.5, log.p = TRUE, lower.tail = FALSE)
+  etaK<-((HT*part*cmin)+(K-1)*cpr+cov)/K*T
+  etalist[i]<-etaK
+  i<-i+1
+}
+
+
+y<-min(etalist)
+x<-Klist[which.min(etalist)]
+
+plot(cbind(Klist,etalist),type = "l",xlab= "Number of partial renewal (K)",ylab="Cost per unit time")
+points(cbind(x,y),col="red")

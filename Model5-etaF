@@ -1,0 +1,31 @@
+
+lam<-1
+beta<-1.5
+
+tEr<-600
+tPm<-100
+
+
+etalist = c()
+Tlist = c()
+
+i<-0
+
+int <- function(t) 1-(1-exp(-(t/lam)^beta))
+
+for(T in seq(0, 2, by = 0.01)) {
+  Tlist[i] <-T
+  FT=1-exp(-(T/lam)^beta)
+  Ex<-integrate(int,0,T)$value+tEr*FT+tPm*(1-FT)
+  n<-integrate(int,0,T)$value
+  etaF<-n/Ex
+  etalist[i]<-etaF
+  i<-i+1
+}
+
+
+y<-max(etalist)
+x<-Tlist[which.max(etalist)]
+
+plot(cbind(Tlist,etalist),type = "l",xlab= "Maintenace interval (T)",ylab="Mean reward per unit time")
+points(cbind(x,y),col="red")

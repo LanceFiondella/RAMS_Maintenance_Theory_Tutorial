@@ -1,0 +1,30 @@
+lam<-1
+beta<-1.5
+c<-0.01
+
+
+etalist = c()
+Tlist = c()
+
+i<-0
+
+
+#cdf <- function(t) 1-exp(-(t/lam)^beta)
+#pdf<-function(t) (beta/lam)*(t/lam)^(beta-1)*exp(-(t/lam)^beta)
+
+ht<-function(t)((beta/lam)*(t/lam)^(beta-1)*exp(-(t/lam)^beta))/exp(-(t/lam)^beta)
+
+for(T in seq(0.01, 1, by = 0.01)) {
+  Tlist[i] <-T
+  HT<-integrate(ht,0,T)$value
+  etaD<-(HT+c)/T
+  etalist[i]<-etaD
+  i<-i+1
+}
+
+
+y<-min(etalist)
+x<-Tlist[which.min(etalist)]
+
+plot(cbind(Tlist,etalist),type = "l",xlab= "Maintenance interval (T)",ylab="Average cost per unit time")
+points(cbind(x,y),col="red")

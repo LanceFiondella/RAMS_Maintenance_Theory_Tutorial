@@ -16,12 +16,16 @@ logL = function(x){
 
 y.mle = nlm(logL, c(shape = 0.1, scale = 0.1), hessian = TRUE)
 y.mle
-# pdf and cdf plots fitted weibull model
-plot(ecdf(y),xlab = "lifetimes", 
-      ylab = "density", main = "fitted Weibull density using MLE",axes=FALSE)
-par(new=TRUE)
-plot(function(y) pweibull(y, shape = y.mle$estimate[1], 
-      scale = y.mle$estimate[2]), 0, 3, xlab = "lifetimes", 
+
+#cdf plot fitted weibull model
+time<-seq(0, 3, by=0.061)
+fc<-seq(0.02, 1, by=0.02)
+plot(y,fc, xlab = "lifetimes", 
       ylab = "density", main = "fitted Weibull density using MLE")
+par(new=TRUE)
+plot(function(time) pweibull(time, shape = 1/y.mle$estimate[1], 
+      scale = y.mle$estimate[2]), 0, 3, xlab = "lifetimes", 
+      ylab = "density", main = "fitted Weibull density using MLE",axes=FALSE)
+
 
 

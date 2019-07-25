@@ -1,2 +1,2 @@
 # RAMS_Maintenance_Theory_Tutorial
-Includes code for assessment presented in the tutorial
+This tutorial provides an overview of structured system reliability and presents discrete and continuous component-based system reliability modeling. We also discuss a parameter estimation method such as maximum likelihood estimation, which is a technique to identify numerical parameter values for a model to best fit a data set. We then introduce the five preventive maintenance models based on lifetime distributions, and examin sensitivity of each models to numerical values of parameters and indicated the optimal time intervals. To improve learning outcomes, computational examples present. This repository includes code for assessment presented in the tutorial.

@@ -1,20 +1,35 @@
+# Revenue per unit of operation time 
 r1<-1
+
+#Penalty per unit of idle time 
 r2<--0.1
+
+#Number of Components
 n<-10
 
+#Baseline cost of technician' s visit
 cp<-0.1
+
+#Cost per service of one machine
 co<-0.01
 
+#Create empty list for average reward per unit time
 etaTlist = c()
 Tlist = c()
 i<-0
 
 for(T in seq(0.01, 1, by = 0.01)) {
   Tlist[i] <-T
+  
+  # CDF of machine lifetime
   cdf<-pweibull(T, scale=1, shape=1.5)
+  
+  #Mean reward from one machine
   integrand <- function(t) {r1*t+r2*(T-t)}
   partrT<-integrate(integrand, lower = 0, upper = T)
   rT<-partrT$value+r1*T*(1-cdf)
+  
+  #Average reward per unit time
   etaT<-(n*rT-cp-n*co)/T
   etaTlist[i]<-etaT
   i<-i+1

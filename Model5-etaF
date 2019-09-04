@@ -1,8 +1,13 @@
-
+#Scale parameter of Weibull distribution
 lam<-1
+
+#Shape parameter of Weibull distribution
 beta<-1.5
 
+#Time to perform emergency repair after failure 
 tEr<-600
+
+#preventive replacement at age 𝑇
 tPm<-100
 
 
@@ -15,9 +20,15 @@ int <- function(t) 1-(1-exp(-(t/lam)^beta))
 
 for(T in seq(0, 2, by = 0.01)) {
   Tlist[i] <-T
+  
+  #Cumulative distribution function of Weibull distribution
   FT=1-exp(-(T/lam)^beta)
+  
+  #Mean reward during one renewal interval
   Ex<-integrate(int,0,T)$value+tEr*FT+tPm*(1-FT)
   n<-integrate(int,0,T)$value
+  
+  #Mean reward per unit time
   etaF<-n/Ex
   etalist[i]<-etaF
   i<-i+1

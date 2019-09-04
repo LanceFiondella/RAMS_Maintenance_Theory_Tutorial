@@ -1,8 +1,10 @@
-
-lam<-1
+#Shape parameter of Weibull distribution
 beta<-1.5
 
+#Emergency repair cost
 cEr<-30000
+
+#Preventive replacement cost
 cPm<-1000
 
 
@@ -15,8 +17,13 @@ int <- function(t) 1-(1-exp(-(t/lam)^beta))
 
 for(T in seq(0, 1, by = 0.01)) {
   Tlist[i] <-T
+  
+  #Mean of inter- renewal period
   Ez<-integrate(int,0,T)$value
+  #Cumulative distribution function of Weibull distribution
   FT=1-exp(-(T/lam)^beta)
+  
+  #Mean cost per unit time
   etaAge<-(FT*cEr+(1-FT)*cPm)/Ez
   etalist[i]<-etaAge
   i<-i+1

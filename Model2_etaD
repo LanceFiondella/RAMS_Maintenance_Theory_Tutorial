@@ -1,22 +1,29 @@
+#define scale parameter of Weibull distribution
 lam<-1
+
+#define shape parameter of Weibull distribution
 beta<-1.5
+
+#define cost of preventive maintenace
 c<-0.01
 
-
+#create empty list for average cost per unit time
 etalist = c()
+
+#create empty list for time
 Tlist = c()
 
-i<-0
-
-
-#cdf <- function(t) 1-exp(-(t/lam)^beta)
-#pdf<-function(t) (beta/lam)*(t/lam)^(beta-1)*exp(-(t/lam)^beta)
-
+#define hazard rate of the system which is h(t)=f(t)/F(t)
 ht<-function(t)((beta/lam)*(t/lam)^(beta-1)*exp(-(t/lam)^beta))/exp(-(t/lam)^beta)
 
+i<-0
 for(T in seq(0.01, 1, by = 0.01)) {
   Tlist[i] <-T
+  
+  #mean number of failures on [0,T]
   HT<-integrate(ht,0,T)$value
+  
+  #Average cost per unit time
   etaD<-(HT+c)/T
   etalist[i]<-etaD
   i<-i+1
